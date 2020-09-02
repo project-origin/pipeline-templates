@@ -18,15 +18,19 @@ parameters:
   - name: overrideValues
     type: string
 
+variables:
+  - name: poolName
+    value: ${{ parameters.poolName }}
+
 jobs:
   - deployment: deploy
     displayName: Deploy
     dependsOn: build_and_release
     condition: succeeded()
     pool:
-      ${{ if ne(parameters.poolName, '') }}:
-        name: ${{ parameters.poolName }}
-      ${{ if eq(parameters.poolName, '') }}:
+      ${{ if ne($(poolName), '') }}:
+        name: $(poolName)
+      ${{ if eq($(poolName), '') }}:
         vmImage: 'ubuntu-latest'
     environment: ${{ parameters.deploymentEnvironment }}
     strategy:
@@ -55,9 +59,9 @@ jobs:
         on:
           failure:
             pool:
-              ${{ if ne(parameters.poolName, '') }}:
-                name: ${{ parameters.poolName }}
-              ${{ if eq(parameters.poolName, '') }}:
+              ${{ if ne($(poolName), '') }}:
+                name: $(poolName)
+              ${{ if eq($(poolName), '') }}:
                 vmImage: 'ubuntu-latest'
             steps:
               - task: HelmDeploy@0
