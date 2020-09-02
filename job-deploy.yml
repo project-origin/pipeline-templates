@@ -8,8 +8,9 @@ parameters:
   - name: releaseName
     type: string
 
-  - name: poolName
-    type: string
+  - name: 'pool'
+    type: object
+    default: {}
     
   - name: deploymentEnvironment
     type: string
@@ -22,11 +23,7 @@ jobs:
     displayName: Deploy
     dependsOn: build_and_release
     condition: succeeded()
-    # pool:
-    #   ${{ if ne(parameters.poolName, '') }}:
-    #     name: ${{ parameters.poolName }}
-    #   ${{ if eq(parameters.poolName, '') }}:
-    #     vmImage: 'ubuntu-latest'
+    pool: ${{ parameters.pool }}
     environment: ${{ parameters.deploymentEnvironment }}
     strategy:
       runOnce:
@@ -53,11 +50,7 @@ jobs:
                 waitForExecution: true
         on:
           failure:
-            # pool:
-            #   ${{ if ne(parameters.poolName, '') }}:
-            #     name: ${{ parameters.poolName }}
-            #   ${{ if eq(parameters.poolName, '') }}:
-            #     vmImage: 'ubuntu-latest'
+            pool: ${{ parameters.pool }}
             steps:
               - task: HelmDeploy@0
                 displayName: Helm rollback
