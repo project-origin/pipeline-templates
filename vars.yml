@@ -1,0 +1,11 @@
+
+
+variables:
+- ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+  - group: 'production'
+- ${{ if eq(variables['Build.SourceBranchName'], 'preprod') }}:
+  - group: 'preprod'
+- ${{ if eq(variables['Build.SourceBranchName'], 'test') }}:
+  - group: 'test'
+- ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+  - group: 'develop'
