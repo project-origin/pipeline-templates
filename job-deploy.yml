@@ -17,14 +17,6 @@ parameters:
   - name: overrideValues
     type: string
 
-
-# $(kubeCon)
-# $(namespace)
-# $(releaseName)
-# $(tag)
-#  $(poolName)
-# $(deploymentEnvironment)
-
 jobs:
   - deployment: deploy
     displayName: Deploy
@@ -56,7 +48,7 @@ jobs:
                 chartType: filepath
                 chartPath: ./chart
                 releaseName: ${{ parameters.releaseName }}
-                overrideValues: {{ parameters.overrideValues }}
+                overrideValues: ${{ parameters.overrideValues }}
                 install: true
                 waitForExecution: true
         on:
