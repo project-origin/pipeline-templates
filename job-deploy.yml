@@ -10,6 +10,7 @@ parameters:
 
   - name: poolName
     type: string
+    default: ''
     
   - name: deploymentEnvironment
     type: string
