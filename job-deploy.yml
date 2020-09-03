@@ -17,6 +17,11 @@ parameters:
 
   - name: overrideValues
     type: string
+    default: ''
+
+  - name: valueFile
+    type: string
+    default: ''
 
   - name: dependsOn
     type: string
@@ -49,7 +54,10 @@ jobs:
                 chartType: filepath
                 chartPath: ./chart
                 releaseName: ${{ parameters.releaseName }}
-                overrideValues: ${{ parameters.overrideValues }}
+                ${{ if ne(parameters.overrideValues, '') }}:
+                  overrideValues: ${{ parameters.overrideValues }}
+                ${{ if ne(parameters.valueFile, '') }}:
+                  valueFile: ${{ parameters.valueFile }}
                 install: true
                 waitForExecution: true
         on:
