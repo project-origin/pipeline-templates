@@ -9,3 +9,5 @@ variables:
   - group: 'test'
 - ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
   - group: 'develop'
+- ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+  - group: 'pr-dummy'
