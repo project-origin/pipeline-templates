@@ -5,11 +5,13 @@ parameters:
   - name: tag
     type: string
 
+  - name: dependsOn
+    type: string
+
 jobs:
-  - job: build_and_release
+  - job: docker-build
     displayName: Build and Release
-    dependsOn: test
-    condition: ne(variables['Build.Reason'], 'PullRequest')
+    dependsOn: ${{ parameters.dependsOn }}
     steps:
       - script: echo "##vso[task.setvariable variable=tag]${{ parameters.tag }}$(git describe --tags --long | sed '0,/-/s/-/./')"
         displayName: Append tag with git describe

@@ -18,11 +18,13 @@ parameters:
   - name: overrideValues
     type: string
 
+  - name: dependsOn
+    type: string
+
 jobs:
   - deployment: deploy
     displayName: Deploy
-    dependsOn: build_and_release
-    condition: ne(variables['Build.Reason'], 'PullRequest')
+    dependsOn: ${{ parameters.dependsOn }}
     pool: ${{ parameters.pool }}
     environment: ${{ parameters.deploymentEnvironment }}
     strategy:
