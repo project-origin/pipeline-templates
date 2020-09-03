@@ -1,5 +1,5 @@
 jobs:
-  - job: run-pytest
+  - job: run_pytest
     displayName: Test
     pool:
       vmImage: 'ubuntu-latest'

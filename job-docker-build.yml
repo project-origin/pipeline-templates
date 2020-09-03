@@ -9,7 +9,7 @@ parameters:
     type: string
 
 jobs:
-  - job: docker-build
+  - job: docker_build
     displayName: Build and Release
     dependsOn: ${{ parameters.dependsOn }}
     steps:
