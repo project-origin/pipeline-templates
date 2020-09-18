@@ -64,7 +64,7 @@ jobs:
                 ${{ if ne(parameters.overrideValues, '') }}:
                   overrideValues: ${{ parameters.overrideValues }}
                 ${{ if ne(parameters.valueFile, '') }}:
-                  valueFile: ${{ valueFile }}
+                  valueFile: ${{ parameters.valueFile }}
                 install: true
                 waitForExecution: true
         on:
