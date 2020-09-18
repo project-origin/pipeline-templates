@@ -19,9 +19,14 @@ parameters:
     type: string
     default: ''
 
-  - name: secureFileName
+  - name: valueFile
     type: string
     default: ''
+
+  - name: customStep
+    type: step
+    default:
+      script: echo "empty step"
 
   - name: dependsOn
     type: string
@@ -41,11 +46,7 @@ jobs:
             - checkout: self
               displayName: Download source
 
-            - ${{ if ne(parameters.secureFileName, '') }}:
-              - task: DownloadSecureFile@1
-                name: overrideFile
-                inputs:
-                  secureFile: ${{ parameters.secureFileName }}
+            - ${{ parameters.customStep }}
 
             - script: echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')"
               displayName: Append tag with git describe
@@ -62,8 +63,8 @@ jobs:
                 releaseName: ${{ parameters.releaseName }}
                 ${{ if ne(parameters.overrideValues, '') }}:
                   overrideValues: ${{ parameters.overrideValues }}
-                ${{ if ne(parameters.secureFileName, '') }}:
-                  valueFile: $(overrideFile.secureFilePath)
+                ${{ if ne(parameters.valueFile, '') }}:
+                  valueFile: $(valueFile)
                 install: true
                 waitForExecution: true
         on:
