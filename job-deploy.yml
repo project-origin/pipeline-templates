@@ -25,6 +25,7 @@ parameters:
 
   - name: preDeploy
     type: stepList
+    default: []
 
   - name: dependsOn
     type: string
