@@ -16,7 +16,7 @@ jobs:
         inputs:
           versionSpec: '3.7'
 
-      - script: pip install --upgrade twine wheel setuptools pip pipenv
+      - script: pip install --upgrade twine wheel setuptools pip pipenv importlib-metadata
         displayName: 'Upgrading/installing Python packages'
 
       - script: python -m pipenv install -d
