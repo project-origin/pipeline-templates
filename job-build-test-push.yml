@@ -29,6 +29,6 @@ jobs:
           Dockerfile: Dockerfile
           tags: ${{ parameters.tag }}
 
-      - script: docker run -ti --entrypoint "pipenv run pytest" ${{ parameters.imageName }}
+      - script: docker run --entrypoint "pipenv run pytest" ${{ parameters.imageName }}
         displayName: 'Run tests'
 
