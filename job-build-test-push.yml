@@ -11,7 +11,7 @@ parameters:
 
 jobs:
   - job: docker_build
-    displayName: Build and Release
+    displayName: Build, Test, Push
     ${{ if ne(parameters.dependsOn, '') }}:
       dependsOn: ${{ parameters.dependsOn }}
     steps:
@@ -29,6 +29,6 @@ jobs:
           Dockerfile: Dockerfile
           tags: ${{ parameters.tag }}
 
-      - script: docker run ${{ parameters.imageName }} pipenv run pytest
+      - script: docker run ${{ parameters.imageName }}:${{ parameters.tag }} pipenv run pytest
         displayName: 'Run tests'
 
