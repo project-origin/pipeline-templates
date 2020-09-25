@@ -29,6 +29,6 @@ jobs:
           Dockerfile: Dockerfile
           tags: ${{ parameters.tag }}
 
-      - script: docker run ${{ parameters.imageName }}:${{ parameters.tag }} pipenv run pytest
+      - script: docker run -e TEST=1 ${{ parameters.imageName }}:${{ parameters.tag }} pipenv run pytest
         displayName: 'Run tests'
 
