@@ -10,7 +10,7 @@ parameters:
     default: ''
 
 jobs:
-  - job: docker_build
+  - job: build_test_push
     displayName: Build, Test, Push
     ${{ if ne(parameters.dependsOn, '') }}:
       dependsOn: ${{ parameters.dependsOn }}
@@ -31,4 +31,3 @@ jobs:
 
       - script: docker run -e TEST=1 -v /var/run/docker.sock:/var/run/docker.sock ${{ parameters.imageName }}:${{ parameters.tag }} pipenv run pytest
         displayName: 'Run tests'
-
