@@ -31,3 +31,11 @@ jobs:
 
       - script: docker run -e TEST=1 -v /var/run/docker.sock:/var/run/docker.sock ${{ parameters.imageName }}:${{ parameters.tag }} pipenv run pytest
         displayName: 'Run tests'
+
+      - task: Docker@2
+        displayName: Push image
+        inputs:
+          command: push
+          repository: ${{ parameters.imageName }}
+          containerRegistry: dockerHub
+          tags: ${{ parameters.tag }}
