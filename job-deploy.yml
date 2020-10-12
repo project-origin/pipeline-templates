@@ -44,7 +44,7 @@ jobs:
           steps:
             - checkout: self
               displayName: Download source
-              path: ./repo
+              path: .
 
             - ${{ parameters.preDeploy }}
 
@@ -59,7 +59,7 @@ jobs:
                 namespace: ${{ parameters.namespace }}
                 command: upgrade
                 chartType: filepath
-                chartPath: ./repo/chart
+                chartPath: ./chart
                 releaseName: ${{ parameters.releaseName }}
                 ${{ if ne(parameters.overrideValues, '') }}:
                   overrideValues: ${{ parameters.overrideValues }}
