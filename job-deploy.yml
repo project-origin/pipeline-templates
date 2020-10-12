@@ -44,6 +44,7 @@ jobs:
           steps:
             - checkout: self
               displayName: Download source
+              path: $(Build.SourcesDirectory)
 
             - ${{ parameters.preDeploy }}
 
