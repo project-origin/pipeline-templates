@@ -33,7 +33,7 @@ parameters:
 
   - name: checkoutPath
     type: string
-    default: './repo'
+    default: ''
 
 jobs:
   - deployment: deploy
@@ -48,7 +48,8 @@ jobs:
           steps:
             - checkout: self
               displayName: Download source
-              path: ${{ parameters.checkoutPath }}
+              ${{ if ne(parameters.checkoutPath, '') }}:
+                path: ${{ parameters.checkoutPath }}
 
             - ${{ parameters.preDeploy }}
 
