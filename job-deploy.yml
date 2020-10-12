@@ -66,6 +66,7 @@ jobs:
                   valueFile: ${{ parameters.valueFile }}
                 install: true
                 waitForExecution: true
+                failOnStderr: false
         on:
           failure:
             pool: ${{ parameters.pool }}
