@@ -31,9 +31,9 @@ parameters:
     type: string
     default: ''
 
-  - name: checkoutPath
+  - name: checkoutFolder
     type: string
-    default: ''
+    default: 'repo'
 
 jobs:
   - deployment: deploy
@@ -48,8 +48,8 @@ jobs:
           steps:
             - checkout: self
               displayName: Download source
-              ${{ if ne(parameters.checkoutPath, '') }}:
-                path: ${{ parameters.checkoutPath }}
+              ${{ if ne(parameters.checkoutFolder, '') }}:
+                path: s/${{ parameters.checkoutFolder }}
 
             - ${{ parameters.preDeploy }}
 
@@ -64,7 +64,7 @@ jobs:
                 namespace: ${{ parameters.namespace }}
                 command: upgrade
                 chartType: filepath
-                chartPath: ${{ parameters.checkoutPath }}/chart
+                chartPath: ${{ parameters.checkoutFolder }}/chart
                 releaseName: ${{ parameters.releaseName }}
                 ${{ if ne(parameters.overrideValues, '') }}:
                   overrideValues: ${{ parameters.overrideValues }}
