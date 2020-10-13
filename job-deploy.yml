@@ -52,7 +52,7 @@ jobs:
 
             - ${{ parameters.preDeploy }}
 
-            - script: cd ${{ parameters.checkoutFolder }} && echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')" && cd ..
+            - script: cd ${{ parameters.checkoutFolder }} && ls && echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')" && cd ..
               displayName: Append tag with git describe
 
             - script: echo Tag $(tag)
