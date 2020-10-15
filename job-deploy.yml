@@ -33,7 +33,7 @@ parameters:
 
   - name: checkoutFolder
     type: string
-#    default: ''
+    default: 'repo'
 
 jobs:
   - deployment: deploy
@@ -54,9 +54,6 @@ jobs:
 
             - script: cd ${{ parameters.checkoutFolder }} && echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')" && cd ..
               displayName: Append tag with git describe
-
-            - script: echo Tag $(tag)
-              displayName: Tag
 
             - task: HelmDeploy@0
               displayName: Helm upgrade
