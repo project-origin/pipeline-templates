@@ -69,7 +69,10 @@ jobs:
                 namespace: ${{ parameters.namespace }}
                 command: upgrade
                 chartType: filepath
-                chartPath: chart
+                ${{ if eq(parameters.checkoutFolder, '') }}:
+                  chartPath: chart
+                ${{ if ne(parameters.checkoutFolder, '') }}:
+                  chartPath: ${{ parameters.checkoutFolder }}/chart
                 releaseName: ${{ parameters.releaseName }}
                 ${{ if ne(parameters.overrideValues, '') }}:
                   overrideValues: ${{ parameters.overrideValues }}
