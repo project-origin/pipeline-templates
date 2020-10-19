@@ -31,9 +31,9 @@ parameters:
     type: string
     default: ''
 
-#  - name: checkoutFolder
-#    type: string
-#    default: 'repo'
+  - name: checkoutFolder
+    type: string
+    default: ''
 
 jobs:
   - deployment: deploy
@@ -48,12 +48,17 @@ jobs:
           steps:
             - checkout: self
               displayName: Download source
-#              path: s/${{ parameters.checkoutFolder }}
+              ${{ if ne(parameters['checkoutFolder'], '') }}:
+                path: s/${{ parameters.checkoutFolder }}
 
             - ${{ parameters.preDeploy }}
 
-            - script: echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')"
-              displayName: Append tag with git describe
+            ${{ if eq(parameters['checkoutFolder'], '') }}:
+              - script: echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')"
+                displayName: Append tag with git describe
+            ${{ if ne(parameters['checkoutFolder'], '') }}:
+              - script: cd ${{ parameters.checkoutFolder }} && echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')" && cd ..
+                displayName: Append tag with git describe
 
             - task: HelmDeploy@0
               displayName: Helm upgrade
