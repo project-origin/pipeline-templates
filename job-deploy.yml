@@ -55,11 +55,11 @@ jobs:
 
             - script: echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')"
               displayName: Append tag with git describe
-              condition: eq(parameters['checkoutFolder'], '')
+              condition: eq(parameters.checkoutFolder, '')
 
             - script: cd ${{ parameters.checkoutFolder }} && echo "##vso[task.setvariable variable=tag]$(tag)$(git describe --tags --long | sed '0,/-/s/-/./')" && cd ..
               displayName: Append tag with git describe
-              condition: ne(parameters['checkoutFolder'], '')
+              condition: ne(parameters.checkoutFolder, '')
 
             - task: HelmDeploy@0
               displayName: Helm upgrade
