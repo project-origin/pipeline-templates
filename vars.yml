@@ -7,5 +7,7 @@ variables:
   - group: 'preprod'
 - ${{ if eq(variables['Build.SourceBranchName'], 'test') }}:
   - group: 'test'
+- ${{ if eq(variables['Build.SourceBranchName'], 'demo') }}:
+  - group: 'demo'
 - ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
   - group: 'develop'
